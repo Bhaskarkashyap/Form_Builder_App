@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/providers/theme-provider"
+import DesinerContextProvider from "@/components/context/DesinerContext";
+
+
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
+import NextTopLoader from 'nextjs-toploader'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +29,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <NextTopLoader />
+           <DesinerContextProvider>
+             <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+                       >
+                     {children}
+                     <Toaster />
+                       </ThemeProvider>
+           </DesinerContextProvider>
       </body>
     </html>
   );
