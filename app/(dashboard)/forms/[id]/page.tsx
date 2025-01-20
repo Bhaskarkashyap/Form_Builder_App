@@ -13,7 +13,7 @@ import { formatDistance } from 'date-fns';
 
 async function FormDeailPage({params} : {params : { id : string};}){
     
-    const {id} =  params;
+    const {id} = await params;
     const form = await GetFormById(Number(id))
 
     if(!form) {

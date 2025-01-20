@@ -1,7 +1,7 @@
 "use client"
 
 import { Form } from '@prisma/client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PreviewDialogBtn from '@/components/PreviewDialogBtn'
 import SaveFormBtn from '@/components/SaveFormBtn'
 import PublishFormBtn from '@/components/PublishFormBtn'
@@ -17,6 +17,9 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Confetti from 'react-confetti';
 
 function FormBuilder({form} : {form:Form}) {
+
+       
+     
     const { setElements } = useDesigner()
     const mouseSensor = useSensor(MouseSensor,{
         activationConstraint:{
@@ -38,7 +41,17 @@ function FormBuilder({form} : {form:Form}) {
       setElements(elements)
       
     }, [form, setElements])
+
     
+    const [mounted, setMounted] = useState(false)
+       
+        useEffect(() => {
+            setMounted(true)
+        }, [])
+    
+        if(!mounted) {
+            return null;
+        }
 
  const shareUrl = `${window.location.origin}/submit/${form.shareURL}`
 

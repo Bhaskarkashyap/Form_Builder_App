@@ -12,10 +12,31 @@ import { Captions, FilePenLine, MousePointerClick, View } from 'lucide-react'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
 
-const Home = async () => {
+
+import { ThemeSwitcher } from '@/components/ThemeSwitcher'
+import UserButton from '@/components/UserButton'
+import { ScrollText } from 'lucide-react'
+
+const DashboardPage = async () => {
   const forms = await GetForm()
   return (
+<div className='mx-auto'>
+<nav className='flex justify-between items-center border-b border-border h-[60px] px-4 py-2'>
+    <div className='flex gap-x-2'>
+    <ScrollText size={15} /> 
+    <h1 className='font-bold'>
+    <Link href={"/?visited=true"}>
+    Form Builder
+    </Link>
+      </h1>
+    </div>
+    <div className='flex gap-4 items-center'>
+      <ThemeSwitcher />
+      <UserButton url='/landingpage' label='Log Out' />
+    </div>
+  </nav>
     <div className='container pt-4 w-full mt-5 gap-y-5 relative'>
+
       <Suspense fallback={<StatsCards loading={true} />}><CardStatsWrapper /></Suspense>
   
     <Separator className='my-6' />
@@ -31,6 +52,7 @@ const Home = async () => {
       </Suspense>
      </div>
     </div>
+</div>
   )
 }
 
@@ -48,13 +70,16 @@ loading: boolean
  function StatsCards(props: StateProps) {
   const {data , loading } = props;
 
-  return <div className='w-full pt-8 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
-
+  return (
+<>
+<h2 className='font-bold text-xl'>Overview</h2>
+    <div className='w-full pt-8 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
+    
     <StatsCard title="Total Visits"
     helperText= "All time form vists"
     loading={loading}
     value={data?.visits.toLocaleString() || ""}
-    className = 'shadow-md shadow-purple-600 '
+    className = 'shadow-md  bg-[#e9e9e6]  text-black'
     icon = <View className='text-purple-600' size={16} />
     />
     
@@ -62,25 +87,27 @@ loading: boolean
     helperText= "All time form Submission"
     loading={loading}
     value={data?.submission.toLocaleString() || ""}
-    className = 'shadow-md shadow-green-600 '
+    className = 'shadow-md bg-purple-100 text-black'
     icon = <Captions className='text-green-600' size={16}  />
     />
     <StatsCard title="Submission Rate"
     helperText= "All time form SubmissionRate"
     loading={loading}
     value={data?.submissionRate.toLocaleString() + '%' || ""}
-     className = 'shadow-md shadow-red-600 '
+     className = 'shadow-md bg-green-100 text-black '
     icon = <MousePointerClick className='text-red-600' size={16} />
     />
     <StatsCard title="Bounce Rate"
     helperText= "Visits that leaves without interacting"
     loading={loading}
     value={data?.bounceRate.toLocaleString() + '%' || ""}
-     className = 'shadow-md shadow-gray-600 ' 
+     className = 'shadow-md bg-blue-100 text-black' 
     icon = <View className='text-gray-600' size={16} />
     />
   
   </div>
+</>
+  )
 }
 
 
@@ -93,8 +120,9 @@ export function StatsCard({title, helperText, loading, value, className, icon}: 
   icon: React.ReactNode
 }) {
   return <Card className={cn(className, 'rounded-none')}>
+
     <CardHeader className='flex flex-row items-center justify-between pb-2'>
-      <CardTitle className='text-sm font-medium text-muted-foreground'>{title}</CardTitle>
+      <CardTitle className='text-sm font-medium'>{title}</CardTitle>
       {icon}
     </CardHeader>
     <CardContent>
@@ -106,7 +134,7 @@ export function StatsCard({title, helperText, loading, value, className, icon}: 
        )}
        {!loading && value}
       </div>
-      <p className='text-xs text-muted-foreground pt-1'>{helperText}</p>
+      <p className='text-xs pt-1'>{helperText}</p>
     </CardContent>
   </Card>
 }
@@ -166,4 +194,4 @@ return <Card>
 }
 
 
-export default Home
+export default DashboardPage

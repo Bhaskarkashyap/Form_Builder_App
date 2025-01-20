@@ -7,7 +7,9 @@ async function SubmitPage({params}: {params: {
     formUrl: string
 }}) {
  
-    const form  = await GetFormContentByUrl(params.formUrl)
+     const formURl = await params.formUrl
+ 
+    const form  = await GetFormContentByUrl(formURl)
 
     if(!form) {
         throw new Error("form not found")

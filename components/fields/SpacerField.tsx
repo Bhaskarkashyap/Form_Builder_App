@@ -79,7 +79,7 @@ function FormComponent({
     const { height } = element.extraAttributes;
 
 return (
-     <div style={{height, width:"100%"}}>00</div>
+     <div style={{height, width:"100%"}}></div>
 )
 }
 
