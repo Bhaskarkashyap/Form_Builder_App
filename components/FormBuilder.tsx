@@ -15,6 +15,7 @@ import { toast } from '@/hooks/use-toast'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Confetti from 'react-confetti';
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 function FormBuilder({form} : {form:Form}) {
 
@@ -94,6 +95,9 @@ function FormBuilder({form} : {form:Form}) {
     <DndContext sensors={sensors}>
         <main className='flex flex-col w-full'>
             <nav className='flex justify-between border-b-2 p-4 gap-3 items-center'>
+            <Button variant={"link"} asChild>
+                        <Link href={'/?visited=true'} className='gap-2'><ArrowLeft />Home</Link>
+                    </Button>
                 <h2 className='truncate font-medium '>
                     <span className='text-muted-foreground mr-2'>Form:</span>
                     {form.name}
@@ -104,6 +108,7 @@ function FormBuilder({form} : {form:Form}) {
                     <>
                     <SaveFormBtn id={form.id} />
                     <PublishFormBtn id={form.id}/>
+                      <ThemeSwitcher />
                     </>
                 )}
                 </div>
